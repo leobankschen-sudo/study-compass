@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhixu.studycompass.mapper.UserMapper">
+    <select id="findAll" resultType="com.zhixu.studycompass.model.User">
+        SELECT id, username, nickname, email, password_hash, role, enabled, created_at, updated_at
+        FROM app_user ORDER BY created_at DESC
+    </select>
+    <select id="findById" resultType="com.zhixu.studycompass.model.User">
+        SELECT id, username, nickname, email, password_hash, role, enabled, created_at, updated_at
+        FROM app_user WHERE id = #{id}
+    </select>
+    <select id="findByUsername" resultType="com.zhixu.studycompass.model.User">
+        SELECT id, username, nickname, email, password_hash, role, enabled, created_at, updated_at
+        FROM app_user WHERE username = #{username}
+    </select>
+    <select id="existsByUsernameOrEmail" resultType="boolean">
+        SELECT COUNT(*) > 0 FROM app_user
+        WHERE (username = #{username} OR email = #{email})
+        <if test="excludeId != null">AND id != #{excludeId}</if>
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO app_user (username, nickname, email, role, enabled)
+        VALUES (#{username}, #{nickname}, #{email}, #{role}, #{enabled})
+    </insert>
+    <insert id="insertWithPassword" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO app_user (username, nickname, email, password_hash, role, enabled)
+        VALUES (#{username}, #{nickname}, #{email}, #{passwordHash}, #{role}, #{enabled})
+    </insert>
+    <update id="update">
+        UPDATE app_user SET username=#{username}, nickname=#{nickname}, email=#{email},
+        role=#{role}, enabled=#{enabled}, updated_at=CURRENT_TIMESTAMP WHERE id=#{id}
+    </update>
+    <update id="updatePasswordHash">
+        UPDATE app_user SET password_hash=#{passwordHash}, updated_at=CURRENT_TIMESTAMP WHERE id=#{id}
+    </update>
+    <delete id="deleteById">DELETE FROM app_user WHERE id = #{id}</delete>
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhixu.studycompass.mapper.StudyRecordMapper">
+    <select id="findByUserId" resultType="com.zhixu.studycompass.model.StudyRecord">
+        SELECT id, user_id, goal_id, task_id, study_date, duration_minutes, content,
+               reflection, focus_score, created_at, updated_at
+        FROM study_record
+        WHERE user_id = #{userId}
+        <if test="startDate != null">AND study_date &gt;= #{startDate}</if>
+        <if test="endDate != null">AND study_date &lt;= #{endDate}</if>
+        ORDER BY study_date DESC, created_at DESC
+    </select>
+    <select id="findById" resultType="com.zhixu.studycompass.model.StudyRecord">
+        SELECT id, user_id, goal_id, task_id, study_date, duration_minutes, content,
+               reflection, focus_score, created_at, updated_at
+        FROM study_record WHERE id = #{id}
+    </select>
+    <select id="countByGoalId" resultType="int">SELECT COUNT(*) FROM study_record WHERE goal_id = #{goalId}</select>
+    <select id="countByTaskId" resultType="int">SELECT COUNT(*) FROM study_record WHERE task_id = #{taskId}</select>
+    <select id="countByUserId" resultType="int">SELECT COUNT(*) FROM study_record WHERE user_id = #{userId}</select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO study_record
+        (user_id, goal_id, task_id, study_date, duration_minutes, content, reflection, focus_score)
+        VALUES (#{userId}, #{goalId}, #{taskId}, #{studyDate}, #{durationMinutes},
+                #{content}, #{reflection}, #{focusScore})
+    </insert>
+    <update id="update">
+        UPDATE study_record SET user_id=#{userId}, goal_id=#{goalId}, task_id=#{taskId},
+        study_date=#{studyDate}, duration_minutes=#{durationMinutes}, content=#{content},
+        reflection=#{reflection}, focus_score=#{focusScore}, updated_at=CURRENT_TIMESTAMP
+        WHERE id=#{id}
+    </update>
+    <delete id="deleteById">DELETE FROM study_record WHERE id = #{id}</delete>
+</mapper>

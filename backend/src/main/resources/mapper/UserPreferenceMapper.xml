@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhixu.studycompass.mapper.UserPreferenceMapper">
+    <select id="findByUserId" resultType="com.zhixu.studycompass.model.UserPreference">
+        SELECT user_id, weekly_target_hours, preferred_session_minutes, preferred_study_period,
+               ai_personalization, created_at, updated_at
+        FROM user_preference WHERE user_id = #{userId}
+    </select>
+    <insert id="upsert">
+        INSERT INTO user_preference
+        (user_id, weekly_target_hours, preferred_session_minutes, preferred_study_period, ai_personalization)
+        VALUES (#{userId}, #{weeklyTargetHours}, #{preferredSessionMinutes},
+                #{preferredStudyPeriod}, #{aiPersonalization})
+        ON DUPLICATE KEY UPDATE weekly_target_hours=VALUES(weekly_target_hours),
+        preferred_session_minutes=VALUES(preferred_session_minutes),
+        preferred_study_period=VALUES(preferred_study_period),
+        ai_personalization=VALUES(ai_personalization), updated_at=CURRENT_TIMESTAMP
+    </insert>
+</mapper>

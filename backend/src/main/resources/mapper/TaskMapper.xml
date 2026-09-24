@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhixu.studycompass.mapper.TaskMapper">
+    <select id="findByUserId" resultType="com.zhixu.studycompass.model.LearningTask">
+        SELECT id, goal_id, user_id, title, description, priority, status, due_date,
+               estimated_minutes, sort_order, ai_generated, completed_at, created_at, updated_at
+        FROM learning_task WHERE user_id = #{userId}
+        <if test="status != null">AND status = #{status}</if>
+        ORDER BY due_date IS NULL, due_date, sort_order, created_at DESC
+    </select>
+    <select id="findById" resultType="com.zhixu.studycompass.model.LearningTask">
+        SELECT id, goal_id, user_id, title, description, priority, status, due_date,
+               estimated_minutes, sort_order, ai_generated, completed_at, created_at, updated_at
+        FROM learning_task WHERE id = #{id}
+    </select>
+    <select id="countByGoalId" resultType="int">SELECT COUNT(*) FROM learning_task WHERE goal_id = #{goalId}</select>
+    <select id="countByUserId" resultType="int">SELECT COUNT(*) FROM learning_task WHERE user_id = #{userId}</select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO learning_task
+        (goal_id, user_id, title, description, priority, status, due_date,
+         estimated_minutes, sort_order, ai_generated, completed_at)
+        VALUES (#{goalId}, #{userId}, #{title}, #{description}, #{priority}, #{status}, #{dueDate},
+                #{estimatedMinutes}, #{sortOrder}, #{aiGenerated}, #{completedAt})
+    </insert>
+    <update id="update">
+        UPDATE learning_task SET goal_id=#{goalId}, user_id=#{userId}, title=#{title},
+        description=#{description}, priority=#{priority}, status=#{status}, due_date=#{dueDate},
+        estimated_minutes=#{estimatedMinutes}, sort_order=#{sortOrder}, ai_generated=#{aiGenerated},
+        completed_at=#{completedAt}, updated_at=CURRENT_TIMESTAMP WHERE id=#{id}
+    </update>
+    <delete id="deleteById">DELETE FROM learning_task WHERE id = #{id}</delete>
+</mapper>
