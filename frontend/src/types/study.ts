@@ -144,3 +144,50 @@ export interface StudyRecordPayload {
   reflection: string
   focusScore: number
 }
+
+export type AiReportType = 'REVIEW' | 'PLAN'
+
+export interface AiSourceStats {
+  recordCount: number
+  totalMinutes: number
+  completedTasks: number
+  averageFocus: number | null
+}
+
+export interface AiInsight {
+  title: string
+  detail: string
+}
+
+export interface AiAction {
+  title: string
+  rationale: string
+  durationMinutes: number
+  priority: TaskPriority
+}
+
+export interface AiReportContent {
+  title: string
+  summary: string
+  evidence: string[]
+  insights: AiInsight[]
+  actions: AiAction[]
+}
+
+export interface AiReport {
+  id: number
+  type: AiReportType
+  goalId: number | null
+  periodStart: string
+  periodEnd: string
+  model: string
+  createdAt: string
+  sourceStats: AiSourceStats
+  content: AiReportContent
+}
+
+export interface AiGeneratePayload {
+  goalId: number | null
+  days: number
+  note: string
+}

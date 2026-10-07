@@ -1,5 +1,5 @@
 import { http } from './http'
-import type { ApiResponse, AuthResponse, GoalPayload, LearningGoal, LearningTask, LoginPayload, RegisterPayload, StudyRecord, StudyRecordPayload, TaskPayload, TaskStatus, UserPayload, UserPreference, UserPreferencePayload, UserProfile } from '@/types/study'
+import type { AiGeneratePayload, AiReport, AiReportType, ApiResponse, AuthResponse, GoalPayload, LearningGoal, LearningTask, LoginPayload, RegisterPayload, StudyRecord, StudyRecordPayload, TaskPayload, TaskStatus, UserPayload, UserPreference, UserPreferencePayload, UserProfile } from '@/types/study'
 
 export function getCurrentUserId() {
   const stored = localStorage.getItem('study_compass_user')
@@ -97,4 +97,18 @@ export async function updateRecord(id: number, payload: StudyRecordPayload) {
 
 export async function deleteRecord(id: number) {
   await http.delete(`/records/${id}`)
+}
+
+export async function listAiReports(type?: AiReportType) {
+  const { data } = await http.get<ApiResponse<AiReport[]>>('/ai/reports', { params: { type } })
+  return data.data
+}
+
+export async function generateAiReport(type: AiReportType, payload: AiGeneratePayload) {
+  const { data } = await http.post<ApiResponse<AiReport>>(`/ai/reports/${type}`, payload, { timeout: 60000 })
+  return data.data
+}
+
+export async function deleteAiReport(id: number) {
+  await http.delete(`/ai/reports/${id}`)
 }
