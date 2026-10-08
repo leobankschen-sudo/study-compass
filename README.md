@@ -10,7 +10,7 @@
 
 ## 当前阶段
 
-实验一的后端基础与 CRUD、实验二的前后端分离页面及账号鉴权均已完成。实验三已建立规范分支、结构化提交、Pull Request 模板和自动构建流程。目前学习目标、学习任务、学习记录和首页统计均已接入真实 MySQL 数据。
+实验一至实验四的 CRUD、前后端页面、团队协作和账号安全均已完成。实验五已接入 DeepSeek API，可根据真实学习目标、任务与记录生成结构化复盘和学习计划，并保存最近的历史报告。
 
 ## 本地环境
 
@@ -41,6 +41,16 @@ $env:DB_PASSWORD = "你的本机 MySQL 密码"
 
 - 后端：`8080`
 - 前端：`5173`
+
+## DeepSeek 配置
+
+后端通过环境变量读取密钥，前端不会接触 API Key：
+
+```powershell
+$env:DEEPSEEK_API_KEY = "请在本机填写，不要提交到 Git"
+```
+
+推荐运行 `scripts/start-local.ps1`，脚本会用隐藏输入分别读取 MySQL 密码和 DeepSeek API Key，并在后端进程结束后清理环境变量。默认模型为 `deepseek-flash`，可通过 `DEEPSEEK_MODEL` 覆盖。
 
 ## 本地演示账号
 

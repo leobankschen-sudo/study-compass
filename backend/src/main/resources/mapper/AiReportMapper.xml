@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhixu.studycompass.mapper.AiReportMapper">
+    <select id="findByUserId" resultType="com.zhixu.studycompass.model.AiReport">
+        SELECT id, user_id, goal_id, type, title, period_start, period_end,
+               content_json, model, record_count, total_minutes, completed_tasks,
+               average_focus, created_at
+        FROM ai_report
+        WHERE user_id = #{userId}
+        <if test="type != null">AND type = #{type}</if>
+        ORDER BY created_at DESC
+        LIMIT 20
+    </select>
+    <select id="findById" resultType="com.zhixu.studycompass.model.AiReport">
+        SELECT id, user_id, goal_id, type, title, period_start, period_end,
+               content_json, model, record_count, total_minutes, completed_tasks,
+               average_focus, created_at
+        FROM ai_report WHERE id = #{id}
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO ai_report
+        (user_id, goal_id, type, title, period_start, period_end, content_json, model,
+         record_count, total_minutes, completed_tasks, average_focus)
+        VALUES (#{userId}, #{goalId}, #{type}, #{title}, #{periodStart}, #{periodEnd},
+                #{contentJson}, #{model}, #{recordCount}, #{totalMinutes}, #{completedTasks}, #{averageFocus})
+    </insert>
+    <delete id="deleteById">DELETE FROM ai_report WHERE id = #{id}</delete>
+</mapper>
+

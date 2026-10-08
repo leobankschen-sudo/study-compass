@@ -81,3 +81,23 @@ CREATE TABLE IF NOT EXISTS user_preference (
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT fk_preference_user FOREIGN KEY (user_id) REFERENCES app_user(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS ai_report (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    goal_id BIGINT,
+    type VARCHAR(20) NOT NULL,
+    title VARCHAR(120) NOT NULL,
+    period_start DATE NOT NULL,
+    period_end DATE NOT NULL,
+    content_json LONGTEXT NOT NULL,
+    model VARCHAR(60) NOT NULL,
+    record_count INT NOT NULL DEFAULT 0,
+    total_minutes INT NOT NULL DEFAULT 0,
+    completed_tasks INT NOT NULL DEFAULT 0,
+    average_focus INT,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_ai_report_user FOREIGN KEY (user_id) REFERENCES app_user(id) ON DELETE CASCADE,
+    CONSTRAINT fk_ai_report_goal FOREIGN KEY (goal_id) REFERENCES learning_goal(id) ON DELETE SET NULL,
+    INDEX idx_ai_report_user_type (user_id, type, created_at)
+) ENGINE=InnoDB;

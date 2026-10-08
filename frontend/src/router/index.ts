@@ -7,6 +7,7 @@ const GoalView = () => import('@/views/GoalView.vue')
 const TaskView = () => import('@/views/TaskView.vue')
 const RecordView = () => import('@/views/RecordView.vue')
 const ProfileView = () => import('@/views/ProfileView.vue')
+const AiReviewView = () => import('@/views/AiReviewView.vue')
 const AuthView = () => import('@/views/AuthView.vue')
 
 const router = createRouter({
@@ -23,12 +24,7 @@ const router = createRouter({
         { path: 'goals', name: 'goals', component: GoalView },
         { path: 'tasks', name: 'tasks', component: TaskView },
         { path: 'records', name: 'records', component: RecordView },
-        {
-          path: 'reviews',
-          name: 'reviews',
-          component: SectionView,
-          props: { eyebrow: '回顾与调整', title: '智能复盘', description: '从计划与执行的差异中找到下一步改进方向。', action: '生成复盘' },
-        },
+        { path: 'reviews', name: 'reviews', component: AiReviewView },
         {
           path: 'library',
           name: 'library',

@@ -22,6 +22,16 @@ try {
     [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($passwordPointer)
 }
 
+Write-Host ''
+Write-Host 'DeepSeek 密钥仅注入当前后端进程，不会写入文件。' -ForegroundColor DarkGray
+$secureApiKey = Read-Host '请输入 DeepSeek API Key（输入不可见）' -AsSecureString
+$apiKeyPointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureApiKey)
+try {
+    $deepSeekApiKey = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($apiKeyPointer)
+} finally {
+    [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($apiKeyPointer)
+}
+
 try {
     $env:MYSQL_PWD = $databasePassword
     & $mysqlExecutable --protocol=TCP -h 127.0.0.1 -u root -e 'SELECT VERSION() AS mysql_version;'
@@ -35,8 +45,10 @@ try {
 
     $env:DB_USERNAME = 'root'
     $env:DB_PASSWORD = $databasePassword
+    $env:DEEPSEEK_API_KEY = $deepSeekApiKey
     Remove-Item Env:MYSQL_PWD -ErrorAction SilentlyContinue
     $databasePassword = $null
+    $deepSeekApiKey = $null
 
     Set-Content -LiteralPath $statusFile -Value 'DATABASE_READY' -Encoding utf8
     Write-Host ''
@@ -50,5 +62,7 @@ try {
     Write-Host '请关闭窗口后告诉我，我会继续处理。' -ForegroundColor Yellow
 } finally {
     Remove-Item Env:MYSQL_PWD -ErrorAction SilentlyContinue
+    Remove-Item Env:DEEPSEEK_API_KEY -ErrorAction SilentlyContinue
     $databasePassword = $null
+    $deepSeekApiKey = $null
 }
