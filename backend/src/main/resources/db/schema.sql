@@ -82,6 +82,23 @@ CREATE TABLE IF NOT EXISTS user_preference (
     CONSTRAINT fk_preference_user FOREIGN KEY (user_id) REFERENCES app_user(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
+CREATE TABLE IF NOT EXISTS learning_resource (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    goal_id BIGINT,
+    title VARCHAR(120) NOT NULL,
+    type VARCHAR(20) NOT NULL,
+    source_url VARCHAR(500),
+    description VARCHAR(2000),
+    tags VARCHAR(200),
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_resource_user FOREIGN KEY (user_id) REFERENCES app_user(id) ON DELETE CASCADE,
+    CONSTRAINT fk_resource_goal FOREIGN KEY (goal_id) REFERENCES learning_goal(id) ON DELETE SET NULL,
+    INDEX idx_resource_user_type (user_id, type),
+    INDEX idx_resource_goal (goal_id)
+) ENGINE=InnoDB;
+
 CREATE TABLE IF NOT EXISTS ai_report (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     user_id BIGINT NOT NULL,

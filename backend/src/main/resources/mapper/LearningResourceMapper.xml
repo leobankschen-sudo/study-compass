@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhixu.studycompass.mapper.LearningResourceMapper">
+    <select id="findByUserId" resultType="com.zhixu.studycompass.model.LearningResource">
+        SELECT id, user_id, goal_id, title, type, source_url, description, tags,
+               created_at, updated_at
+        FROM learning_resource
+        WHERE user_id = #{userId}
+        <if test="type != null">AND type = #{type}</if>
+        <if test="goalId != null">AND goal_id = #{goalId}</if>
+        ORDER BY updated_at DESC, created_at DESC
+    </select>
+    <select id="findById" resultType="com.zhixu.studycompass.model.LearningResource">
+        SELECT id, user_id, goal_id, title, type, source_url, description, tags,
+               created_at, updated_at
+        FROM learning_resource WHERE id = #{id}
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO learning_resource
+        (user_id, goal_id, title, type, source_url, description, tags)
+        VALUES (#{userId}, #{goalId}, #{title}, #{type}, #{sourceUrl}, #{description}, #{tags})
+    </insert>
+    <update id="update">
+        UPDATE learning_resource
+        SET goal_id=#{goalId}, title=#{title}, type=#{type}, source_url=#{sourceUrl},
+            description=#{description}, tags=#{tags}, updated_at=CURRENT_TIMESTAMP
+        WHERE id=#{id}
+    </update>
+    <delete id="deleteById">DELETE FROM learning_resource WHERE id = #{id}</delete>
+</mapper>
