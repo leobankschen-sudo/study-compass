@@ -242,6 +242,33 @@ h1 { margin: 0; color: #14213d; font-family: Georgia, "Songti SC", serif; font-s
 .history-row > button:first-child > time { color: #929b97; font-size: 10px; }
 .history-delete { border: 0; color: #a26a62; background: transparent; cursor: pointer; font-size: 10px; }
 
+.library-summary { display: grid; grid-template-columns: repeat(3, 170px) 1fr; align-items: center; min-height: 116px; margin-bottom: 24px; padding: 0 26px; color: #eef4f1; background: #203d45; border-radius: 4px 18px 18px 4px; }
+.library-summary > div { display: grid; grid-template-columns: auto 1fr; align-items: baseline; column-gap: 7px; padding: 10px 22px; border-right: 1px solid rgba(255,255,255,.14); }
+.library-summary > div:first-child { padding-left: 0; }
+.library-summary span { grid-column: 1 / -1; margin-bottom: 7px; color: #acc0ba; font-size: 10px; }
+.library-summary strong { font-family: Georgia, serif; font-size: 30px; font-weight: 500; }
+.library-summary small { color: #b6c8c2; font-size: 9px; }
+.library-summary > p { justify-self: end; max-width: 370px; margin: 0; color: #b2c4be; font-size: 11px; line-height: 1.8; }
+.library-toolbar { display: grid; grid-template-columns: minmax(260px, 1fr) 150px 220px; gap: 12px; margin-bottom: 13px; padding-bottom: 18px; border-bottom: 1px solid #cfd6d2; }
+.resource-shelf { display: grid; }
+.resource-row { display: grid; grid-template-columns: 48px minmax(0, 1fr) 105px auto; align-items: center; gap: 22px; min-height: 144px; padding: 22px 8px; border-bottom: 1px solid #d8ded9; }
+.resource-spine { width: 38px; height: 76px; display: grid; place-items: center; border-radius: 4px 11px 11px 4px; color: #f5f8f6; background: #536c66; font-family: Georgia, "Songti SC", serif; font-size: 17px; box-shadow: inset 4px 0 rgba(0,0,0,.08); }
+.resource-spine.type-article { background: #56647b; }
+.resource-spine.type-video { background: #7b654c; }
+.resource-spine.type-course { background: #315c67; }
+.resource-spine.type-other { background: #7b6b70; }
+.resource-copy { min-width: 0; }
+.resource-title { display: flex; align-items: center; gap: 12px; }
+.resource-title h2 { overflow: hidden; margin: 0; color: #21332e; font-size: 17px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+.resource-title > span { flex: none; color: #73827c; font-size: 9px; }
+.resource-copy > p { max-width: 750px; margin: 10px 0 12px; color: #6e7974; font-size: 12px; line-height: 1.7; }
+.resource-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 7px 14px; color: #85908b; font-size: 10px; }
+.resource-meta > span { color: #42655d; }
+.resource-meta i { padding: 2px 7px; border: 1px solid #d5ddd9; border-radius: 9px; font-style: normal; }
+.resource-source { justify-self: end; }
+.resource-source button { border: 0; border-bottom: 1px solid #7e9d95; padding: 4px 0; color: #315c67; background: transparent; cursor: pointer; font-size: 11px; }
+.resource-source span { color: #99a19e; font-size: 10px; }
+
 @media (max-width: 1180px) {
   .topbar { padding: 0 28px; }
   .nav-item { padding-left: 10px; padding-right: 10px; }
@@ -269,6 +296,9 @@ h1 { margin: 0; color: #14213d; font-family: Georgia, "Songti SC", serif; font-s
   .coach-workbench { grid-template-columns: 280px 1fr; }
   .coach-evidence { padding-right: 25px; }
   .coach-report { padding-left: 32px; }
+  .library-summary { grid-template-columns: repeat(3, 1fr); }
+  .library-summary > p { display: none; }
+  .library-toolbar { grid-template-columns: 1fr 130px 190px; }
 }
 
 @media (max-width: 620px) {
@@ -319,6 +349,15 @@ h1 { margin: 0; color: #14213d; font-family: Georgia, "Songti SC", serif; font-s
   .history-row { grid-template-columns: 1fr 42px; }
   .history-row > button:first-child { grid-template-columns: 40px 1fr; gap: 10px; }
   .history-row > button:first-child > time { display: none; }
+  .library-summary { grid-template-columns: repeat(3, 1fr); min-height: 100px; padding: 0 14px; }
+  .library-summary > div { display: flex; align-items: baseline; flex-wrap: wrap; padding: 8px 12px; }
+  .library-summary span { width: 100%; }
+  .library-summary strong { font-size: 25px; }
+  .library-toolbar { grid-template-columns: 1fr; }
+  .resource-row { grid-template-columns: 42px 1fr; gap: 14px; padding: 21px 3px; }
+  .resource-spine { width: 34px; height: 66px; }
+  .resource-source { grid-column: 2; justify-self: start; }
+  .resource-row .row-actions { grid-column: 2; }
 }
 
 @media (prefers-reduced-motion: reduce) {

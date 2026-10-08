@@ -2,12 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 import AppLayout from '@/layouts/AppLayout.vue'
 
 const DashboardView = () => import('@/views/DashboardView.vue')
-const SectionView = () => import('@/views/SectionView.vue')
 const GoalView = () => import('@/views/GoalView.vue')
 const TaskView = () => import('@/views/TaskView.vue')
 const RecordView = () => import('@/views/RecordView.vue')
 const ProfileView = () => import('@/views/ProfileView.vue')
 const AiReviewView = () => import('@/views/AiReviewView.vue')
+const ResourceLibraryView = () => import('@/views/ResourceLibraryView.vue')
 const AuthView = () => import('@/views/AuthView.vue')
 
 const router = createRouter({
@@ -25,12 +25,7 @@ const router = createRouter({
         { path: 'tasks', name: 'tasks', component: TaskView },
         { path: 'records', name: 'records', component: RecordView },
         { path: 'reviews', name: 'reviews', component: AiReviewView },
-        {
-          path: 'library',
-          name: 'library',
-          component: SectionView,
-          props: { eyebrow: '可靠的学习材料', title: '课程资料库', description: '整理课程资料，并基于可靠来源进行问答。', action: '添加资料' },
-        },
+        { path: 'library', name: 'library', component: ResourceLibraryView },
         { path: 'profile', name: 'profile', component: ProfileView },
       ],
     },

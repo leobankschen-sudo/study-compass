@@ -191,3 +191,28 @@ export interface AiGeneratePayload {
   days: number
   note: string
 }
+
+export type ResourceType = 'DOCUMENT' | 'ARTICLE' | 'VIDEO' | 'COURSE' | 'OTHER'
+
+export interface LearningResource {
+  id: number
+  userId: number
+  goalId: number | null
+  title: string
+  type: ResourceType
+  sourceUrl: string | null
+  description: string | null
+  tags: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+export interface LearningResourcePayload {
+  userId: number
+  goalId: number | null
+  title: string
+  type: ResourceType
+  sourceUrl: string
+  description: string
+  tags: string
+}

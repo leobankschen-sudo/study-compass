@@ -1,5 +1,5 @@
 import { http } from './http'
-import type { AiGeneratePayload, AiReport, AiReportType, ApiResponse, AuthResponse, GoalPayload, LearningGoal, LearningTask, LoginPayload, RegisterPayload, StudyRecord, StudyRecordPayload, TaskPayload, TaskStatus, UserPayload, UserPreference, UserPreferencePayload, UserProfile } from '@/types/study'
+import type { AiGeneratePayload, AiReport, AiReportType, ApiResponse, AuthResponse, GoalPayload, LearningGoal, LearningResource, LearningResourcePayload, LearningTask, LoginPayload, RegisterPayload, ResourceType, StudyRecord, StudyRecordPayload, TaskPayload, TaskStatus, UserPayload, UserPreference, UserPreferencePayload, UserProfile } from '@/types/study'
 
 export function getCurrentUserId() {
   const stored = localStorage.getItem('study_compass_user')
@@ -111,4 +111,23 @@ export async function generateAiReport(type: AiReportType, payload: AiGeneratePa
 
 export async function deleteAiReport(id: number) {
   await http.delete(`/ai/reports/${id}`)
+}
+
+export async function listResources(userId = getCurrentUserId(), type?: ResourceType, goalId?: number) {
+  const { data } = await http.get<ApiResponse<LearningResource[]>>('/resources', { params: { userId, type, goalId } })
+  return data.data
+}
+
+export async function createResource(payload: LearningResourcePayload) {
+  const { data } = await http.post<ApiResponse<LearningResource>>('/resources', payload)
+  return data.data
+}
+
+export async function updateResource(id: number, payload: LearningResourcePayload) {
+  const { data } = await http.put<ApiResponse<LearningResource>>(`/resources/${id}`, payload)
+  return data.data
+}
+
+export async function deleteResource(id: number) {
+  await http.delete(`/resources/${id}`)
 }
